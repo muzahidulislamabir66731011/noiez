@@ -1,75 +1,62 @@
-Noiez — Real-Time Noise Suppression
+# Noiez — Real-Time Noise Suppression
 
-A C++ application called Noiez that performs real-time noise suppression on microphone input using the RNNoise library and PortAudio for audio I/O.
-Features
+Noiez is a C++ program that applies real-time noise suppression to your microphone input using the RNNoise library and PortAudio for audio input/output.
 
-    Real-time audio capture and playback using PortAudio
+---
 
-    Noise suppression using RNNoise denoiser
+## Features
 
-    Ring buffer implementation for smooth audio streaming
+- Real-time noise suppression on microphone audio  
+- Uses RNNoise for high-quality denoising  
+- Smooth audio streaming with ring buffers  
+- Tracks input/output overruns for diagnostics  
+- Supports performance optimizations on x86 CPUs  
 
-    Adjustable wet/dry mix for noise suppression effect blending
+---
 
-    Input and output overrun/underrun diagnostics
+## Requirements
 
-    Support for x86 denormal float control for improved performance
+- C++17 compatible compiler  
+- [PortAudio](http://www.portaudio.com/) installed  
+- [RNNoise](https://github.com/xiph/rnnoise) library installed  
+- SSE support on x86 (optional for speedup)  
 
-Requirements
+---
 
-    C++17 compatible compiler
+## Build Instructions
 
-    PortAudio installed and linked
+Make sure PortAudio and RNNoise are installed on your system, then compile with:
 
-    RNNoise library installed and linked
-
-    SSE support on x86 systems (optional for performance)
-
-    Standard C++ libraries: <vector>, <array>, <iostream>, etc.
-
-Build Instructions
-
-    Clone or download this repository.
-
-    Ensure PortAudio and RNNoise libraries are installed on your system.
-
-    Compile the code linking against PortAudio and RNNoise. For example (Linux):
-
+```bash
 g++ -std=c++17 -O3 main.cpp -lportaudio -lrnnoise -o noiez
-
-Adjust compilation flags as needed for your platform.
+```
+Adjust compiler flags and paths according to your platform.
 Usage
 
-Run the compiled executable:
-
+Run the program with:
+```bash
 ./noiez
-
-    The program captures audio from the default input device (microphone).
-
-    Applies noise suppression in real-time.
-
-    Outputs the processed audio to the default output device (speakers/headphones).
+```
+    It will capture audio from your default microphone, reduce noise in real-time, and play it back.
 
     Press Enter to stop the program.
 
-How It Works
-
-    Captures audio frames of size 480 samples at 48kHz.
-
-    Stores audio in ring buffers for input and output.
-
-    Processes each frame with RNNoise to reduce noise.
-
-    Mixes the processed ("wet") and original ("dry") audio according to a wet_mix factor.
-
-    Plays back the cleaned audio with minimal latency.
-
-    Tracks audio input/output buffer overruns for diagnostics.
-
 Notes
 
-    Ensure your microphone and speakers are properly configured.
+    Make sure your microphone and speakers are properly set up.
 
-    Requires PortAudio and RNNoise installed and accessible on your system.
+    Requires an active audio input and output device.
 
-    Performance can be improved on x86 by enabling denormal number handling (FTZ/DAZ).
+    Performance improves on CPUs supporting flush-to-zero and denormals-are-zero flags.
+---
+License
+
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0). You can use, share, and modify this project for non-commercial purposes only. See the LICENSE file for details.
+
+---
+Acknowledgments
+
+    RNNoise by Jean-Marc Valin
+
+    PortAudio open-source audio library
+
